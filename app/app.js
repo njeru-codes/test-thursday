@@ -6,6 +6,7 @@ const oas = require("express-oas-generator");
 const auth_documentation = require('./middleware/documentation')
 const { requestLogger} = require('./middleware/logger');
 const  authMiddleware = require('./middleware/authMiddleware');
+const swaggerUi = require("swagger-ui-express");
 const router = require('./routes/index')
 const connectDB =require('./db/db')
 const cors = require("cors");
@@ -24,12 +25,13 @@ connectDB();
 // middlewares
 app.use(helmet());
 app.use(express.json());
-app.use('/api-docs', auth_documentation)  //protect swagger-docs with Basic Auth
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);  //log all requests(in and out)
 app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"] }));
 
-
+// app.use('/api-docs', auth_documentation)  //protect swagger-docs with Basic Auth
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger.json")));
 
 
 app.get("/test", (req, res) => {
