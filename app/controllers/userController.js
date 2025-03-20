@@ -1,5 +1,5 @@
 const User = require('../models/user')
-const registerSchema = require('../schemas/userValidator')
+const {registerSchema} = require('../schemas/userValidator')
 
 const registerNewUser = async (req, res) => {
     try {
