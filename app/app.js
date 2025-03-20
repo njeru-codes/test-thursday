@@ -8,6 +8,7 @@ const { requestLogger} = require('./middleware/logger');
 const  authMiddleware = require('./middleware/authMiddleware');
 const router = require('./routes/index')
 const connectDB =require('./db/db')
+const cors = require("cors");
 
 const app = express();
 
@@ -26,6 +27,14 @@ app.use(express.json());
 app.use('/api-docs', auth_documentation)  //protect swagger-docs with Basic Auth
 app.use(express.static(path.join(__dirname, "public")));
 app.use(requestLogger);  //log all requests(in and out)
+app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"] }));
+
+
+
+
+app.get("/test", (req, res) => {
+    res.json({ message: "CORS is enabled!" });
+});
 
 
 // add authentication to routes
