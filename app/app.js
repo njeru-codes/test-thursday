@@ -15,7 +15,10 @@ const app = express();
 
 // configurations
 app.disable('x-powered-by')
-oas.init(app, {}); // Auto-generates Swagger UI documentation from routes
+oas.init(app, {
+    docPath: '/api-docs', // Path to Swagger UI
+    apiDocPath: '/swagger.json', 
+  });
 const port = process.env.PORT  || 3000
 
 //connect to database
@@ -32,7 +35,7 @@ app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "
 
 // app.use('/api-docs', auth_documentation)  //protect swagger-docs with Basic Auth
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(require("./swagger.json")));
-
+app.use("/swagger.json", cors());
 
 app.get("/test", (req, res) => {
     res.json({ message: "CORS is enabled!" });
